@@ -3,23 +3,42 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import NewsFeed from './components/NewsFeed';
 import { NewsItem, AppState, Language } from './types';
-import { TRANSLATIONS, MOCK_NEWS_DATA } from './constants';
-import { fetchNews } from './services/api';
+import { TRANSLATIONS } from './constants';
+import { loadNews, refreshNews } from './services/api';
 
 const App: React.FC = () => {
   const [language, setLanguage] = useState<Language>('IT');
   const [status, setStatus] = useState<AppState>('LOADED');
-  // Initialize with MOCK DATA immediately so it's populated by default
-  const [news, setNews] = useState<NewsItem[]>(MOCK_NEWS_DATA);
-  const [lastUpdated, setLastUpdated] = useState<Date | null>(new Date());
+  const [news, setNews] = useState<NewsItem[]>([]);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   const t = TRANSLATIONS[language];
 
+  // Load cached news from Supabase on page load
+  useEffect(() => {
+    const load = async () => {
+      setStatus('LOADING');
+      try {
+        const cachedNews = await loadNews();
+        if (cachedNews.length > 0) {
+          setNews(cachedNews);
+          setLastUpdated(new Date());
+        }
+        setStatus('LOADED');
+      } catch (error) {
+        console.error("Load from Supabase failed:", error);
+        setStatus('LOADED');
+      }
+    };
+    load();
+  }, []);
+
+  // Refresh: trigger n8n → save to Supabase → read from Supabase
   const handleSync = useCallback(async () => {
     setStatus('LOADING');
     try {
-      const fetchedNews = await fetchNews();
-      setNews(fetchedNews);
+      const freshNews = await refreshNews();
+      setNews(freshNews);
       setStatus('LOADED');
       setLastUpdated(new Date());
     } catch (error) {

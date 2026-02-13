@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NewsItem, Translation } from '../types';
 import { Clock, ArrowUpRight } from 'lucide-react';
 
@@ -8,7 +8,30 @@ interface NewsCardProps {
   categoryLabel: string;
 }
 
+const CATEGORY_GRADIENTS: Record<string, string> = {
+  'models': 'from-violet-500 to-purple-700',
+  'open-source': 'from-emerald-500 to-teal-700',
+  'regulation': 'from-red-500 to-rose-700',
+  'funding': 'from-amber-500 to-orange-700',
+  'research': 'from-blue-500 to-indigo-700',
+  'products': 'from-cyan-500 to-sky-700',
+  'industry': 'from-stone-500 to-stone-700',
+};
+
+const CATEGORY_ICONS: Record<string, string> = {
+  'models': '🧠',
+  'open-source': '🔓',
+  'regulation': '⚖️',
+  'funding': '💰',
+  'research': '🔬',
+  'products': '🚀',
+  'industry': '📡',
+};
+
 const NewsCard: React.FC<NewsCardProps> = ({ item, t, categoryLabel }) => {
+  const [imgError, setImgError] = useState(false);
+  const hasImage = item.image_url && !imgError;
+
   const timeAgo = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
@@ -27,16 +50,18 @@ const NewsCard: React.FC<NewsCardProps> = ({ item, t, categoryLabel }) => {
       
       {/* Image Container */}
       <div className="relative w-full h-48 mb-4 overflow-hidden rounded-[1.5rem] bg-stone-100">
-        {item.image_url ? (
-          <img 
-            src={item.image_url} 
-            alt={item.title} 
+        {hasImage ? (
+          <img
+            src={item.image_url}
+            alt={item.title}
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             loading="lazy"
+            onError={() => setImgError(true)}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-stone-300 bg-stone-100">
-            <span className="text-sm font-medium">No Image</span>
+          <div className={`w-full h-full flex flex-col items-center justify-center bg-gradient-to-br ${CATEGORY_GRADIENTS[item.category] || CATEGORY_GRADIENTS['industry']} transition-transform duration-700 ease-out group-hover:scale-105`}>
+            <span className="text-5xl mb-2">{CATEGORY_ICONS[item.category] || '📡'}</span>
+            <span className="text-white/70 text-xs font-semibold uppercase tracking-widest">{categoryLabel}</span>
           </div>
         )}
         {/* Overlay for category */}

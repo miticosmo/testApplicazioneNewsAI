@@ -1,0 +1,275 @@
+{
+  "name": "News AI",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "techcrunchRSS",
+              "value": "https://techcrunch.com/category/artificial-intelligence/feed/",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "venturebeatRSS",
+              "value": "https://venturebeat.com/category/ai/feed/",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "mitRSS",
+              "value": "https://www.technologyreview.com/topic/artificial-intelligence/feed",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "b9fe6cf1-6a56-432f-be6d-4bc17c407f14",
+      "name": "Workflow Configuration",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -432,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "url",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "id-6",
+              "name": "created",
+              "value": "={{ $json.pubDate }}",
+              "type": "string"
+            },
+            {
+              "id": "id-8",
+              "name": "description",
+              "value": "={{ $json.content }}",
+              "type": "string"
+            },
+            {
+              "id": "id-9",
+              "name": "source",
+              "value": "={{ $json.meta.title }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "65f5813e-2f3a-4660-bfd7-3469be8f46eb",
+      "name": "Format Post Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        464,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Workflow Configuration').first().json.techcrunchRSS }}",
+        "options": {}
+      },
+      "id": "17a990d1-5f7a-4c98-8cbe-28a03539ed85",
+      "name": "Get TechCrunch AI",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -208,
+        16
+      ]
+    },
+    {
+      "parameters": {
+        "path": "ff817b1c-1593-4d95-b69a-1841f56745ee",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -704,
+        208
+      ],
+      "id": "f28d8914-b348-44e5-9ce4-878d98daf44d",
+      "name": "Webhook",
+      "webhookId": "ff817b1c-1593-4d95-b69a-1841f56745ee"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "id": "d8b7fdce-8758-4b72-bf56-dcbed9b94a23",
+      "name": "Split Posts",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        240,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "id": "2143834b-bb4b-46e9-bdc4-8a0ce3898540",
+      "name": "Combine All Posts",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        16,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Workflow Configuration').first().json.mitRSS }}",
+        "options": {}
+      },
+      "id": "dd21ae5c-e3bb-44e9-a83d-c3e38a3081ea",
+      "name": "Get MIT Tech Review AI",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -208,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Workflow Configuration').first().json.venturebeatRSS }}",
+        "options": {}
+      },
+      "id": "17fd971c-bf68-4c44-a965-5c77eef0dd2d",
+      "name": "Get VentureBeat AI",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -208,
+        208
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Workflow Configuration": {
+      "main": [
+        [
+          {
+            "node": "Get TechCrunch AI",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get MIT Tech Review AI",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get VentureBeat AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get TechCrunch AI": {
+      "main": [
+        [
+          {
+            "node": "Combine All Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Workflow Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Posts": {
+      "main": [
+        [
+          {
+            "node": "Format Post Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine All Posts": {
+      "main": [
+        [
+          {
+            "node": "Split Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get MIT Tech Review AI": {
+      "main": [
+        [
+          {
+            "node": "Combine All Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get VentureBeat AI": {
+      "main": [
+        [
+          {
+            "node": "Combine All Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": true
+  },
+  "versionId": "c20ca000-5dd7-4165-b6af-147f9d54d9ad",
+  "meta": {
+    "instanceId": "2bdc5e10adda5aca85bc2ff837f8b3954c5698484b6d2c434936fa5b9c053f2b"
+  },
+  "id": "YUs6CEDkePysLdRr",
+  "tags": []
+}

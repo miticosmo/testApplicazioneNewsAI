@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Segnale AI</title>
+    <link rel="icon" href="data:,">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,6 +49,15 @@
       ::-webkit-scrollbar-thumb:hover {
         background: #D1D5DB;
       }
+      /* Hover effect: text turns yellow and lifts slightly */
+      h1, h2, h3, p, span, a, button {
+        transition: color 0.3s ease, transform 0.3s ease;
+        display: inline-block;
+      }
+      h1:hover, h2:hover, h3:hover, p:hover, span:hover, a:hover {
+        color: #FDE047;
+        transform: translateY(-2px);
+      }
     </style>
   <script type="importmap">
 {
@@ -62,5 +72,6 @@
 </head>
   <body>
     <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>

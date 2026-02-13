@@ -12,8 +12,8 @@ export const CATEGORIES = [
 
 export const TRANSLATIONS: Record<'IT' | 'EN', Translation> = {
   IT: {
-    heroHeadline: "Il tuo Daily AI.",
-    heroSubheadline: "I segnali che contano, curati per professionisti. Niente rumore, solo evoluzione.",
+    heroHeadline: "Le news sulle IA.",
+    heroSubheadline: "Scansioniamo il web in tempo reale. Solo le notizie che contano, aggregate per te.",
     syncButton: "Aggiorna Feed",
     syncingButton: "Analisi in corso...",
     emptyState: "Il feed è vuoto. Premi Aggiorna Feed per ricevere gli ultimi segnali.",
