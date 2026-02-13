@@ -5,60 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Segnale AI</title>
     <link rel="icon" href="data:,">
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500;700&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['DM Sans', 'sans-serif'],
-            },
-            colors: {
-              'crextio-bg': '#FDFBF7',
-              'crextio-yellow': '#FDE047',
-              'crextio-dark': '#1F2937',
-              'crextio-card': '#FFFFFF',
-              'crextio-gray': '#9CA3AF',
-            },
-            borderRadius: {
-              '4xl': '2rem',
-            }
-          }
-        }
-      }
-    </script>
-    <style>
-      body {
-        background-color: #FDFBF7;
-        font-family: 'DM Sans', sans-serif;
-      }
-      /* Custom scrollbar for a cleaner look */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #E5E7EB;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #D1D5DB;
-      }
-      /* Hover effect: text turns yellow and lifts slightly */
-      h1, h2, h3, p, span, a, button {
-        transition: color 0.3s ease, transform 0.3s ease;
-        display: inline-block;
-      }
-      h1:hover, h2:hover, h3:hover, p:hover, span:hover, a:hover {
-        color: #FDE047;
-        transform: translateY(-2px);
-      }
-    </style>
 </head>
   <body>
     <div id="root"></div>

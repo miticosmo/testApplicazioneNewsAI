@@ -10,6 +10,26 @@ export const CATEGORIES = [
   'industry'
 ] as const;
 
+export const CATEGORY_GRADIENTS: Record<string, string> = {
+  'models': 'from-violet-500 to-purple-700',
+  'open-source': 'from-emerald-500 to-teal-700',
+  'regulation': 'from-red-500 to-rose-700',
+  'funding': 'from-amber-500 to-orange-700',
+  'research': 'from-blue-500 to-indigo-700',
+  'products': 'from-cyan-500 to-sky-700',
+  'industry': 'from-stone-500 to-stone-700',
+};
+
+export const CATEGORY_ICONS: Record<string, string> = {
+  'models': '🧠',
+  'open-source': '🔓',
+  'regulation': '⚖️',
+  'funding': '💰',
+  'research': '🔬',
+  'products': '🚀',
+  'industry': '📡',
+};
+
 export const TRANSLATIONS: Record<'IT' | 'EN', Translation> = {
   IT: {
     heroHeadline: "Le news sulle IA.",
@@ -22,6 +42,16 @@ export const TRANSLATIONS: Record<'IT' | 'EN', Translation> = {
     errorJson: "Errore nei dati.",
     errorNetwork: "Nessuna connessione.",
     errorServer: "Servizio non disponibile.",
+    searchPlaceholder: "Cerca notizie...",
+    bookmarksTitle: "Articoli Salvati",
+    bookmarksEmpty: "Nessun articolo salvato. Tocca il cuore su una notizia per salvarla.",
+    navHome: "Home",
+    navBookmarks: "Salvati",
+    backButton: "Indietro",
+    readOriginal: "Leggi originale",
+    shareButton: "Condividi",
+    copiedToClipboard: "Link copiato!",
+    noNewsInCategory: "Nessuna news in questa categoria.",
     categories: {
       'all': 'Tutti',
       'models': 'Modelli',
@@ -49,6 +79,16 @@ export const TRANSLATIONS: Record<'IT' | 'EN', Translation> = {
     errorJson: "Data error.",
     errorNetwork: "No connection.",
     errorServer: "Service unavailable.",
+    searchPlaceholder: "Search news...",
+    bookmarksTitle: "Saved Articles",
+    bookmarksEmpty: "No saved articles. Tap the heart on a news item to save it.",
+    navHome: "Home",
+    navBookmarks: "Saved",
+    backButton: "Back",
+    readOriginal: "Read original",
+    shareButton: "Share",
+    copiedToClipboard: "Link copied!",
+    noNewsInCategory: "No news in this category.",
     categories: {
       'all': 'All',
       'models': 'Models',

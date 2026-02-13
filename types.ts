@@ -24,6 +24,16 @@ export interface Translation {
   errorJson: string;
   errorNetwork: string;
   errorServer: string;
+  searchPlaceholder: string;
+  bookmarksTitle: string;
+  bookmarksEmpty: string;
+  navHome: string;
+  navBookmarks: string;
+  backButton: string;
+  readOriginal: string;
+  shareButton: string;
+  copiedToClipboard: string;
+  noNewsInCategory: string;
   categories: {
     [key: string]: string;
   };
